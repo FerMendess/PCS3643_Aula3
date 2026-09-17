@@ -8,7 +8,8 @@ from typing import Any, override
 from model.database import get_connection
 from model.sessao import Sessao
 
-from controller.filme_controller import FilmeController, validar_data
+from controller.filme_controller import FilmeController
+from controller.helpers import validar_data
 from controller.sala_controller import SalaController
 from controller.tipo_ingresso_controller import TipoIngressoController
 
