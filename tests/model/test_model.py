@@ -4,9 +4,9 @@ import unittest
 
 from pydantic import ValidationError
 
-from model.filme import Filme, FilmeCreate, FilmeResponse, FilmeUpdate
-from model.sala import Sala, SalaCreate, SalaResponse, SalaUpdate
-from model.sessao import (
+from src.model.filme import Filme, FilmeCreate, FilmeResponse, FilmeUpdate
+from src.model.sala import Sala, SalaCreate, SalaResponse, SalaUpdate
+from src.model.sessao import (
     CompraIngressoRequest,
     CompraIngressoResponse,
     Sessao,
@@ -14,7 +14,7 @@ from model.sessao import (
     SessaoDisponivelResponse,
     SessaoUpdate,
 )
-from model.tipo_ingresso import (
+from src.model.tipo_ingresso import (
     TipoIngresso,
     TipoIngressoCreate,
     TipoIngressoResponse,

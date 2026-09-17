@@ -26,10 +26,7 @@ description: Use for rule priority, navigation, and skill invocation (planning, 
 | --- | --- |
 | Persona, communication style | AGENTS.md |
 | Tech stack, venv, project facts | project-rules |
-| Before an ambiguous or relevant change | @interview-plan |
-| Quality gate and post-change verification | agents-feature-checklist |
-| Validating any diff before delivery | @adversarial-review |
+| Quality gate and post-change verification | agents-feature-checklist 
 | MVC layout, routers, controllers, models | project-architecture |
 | Test suite layout, running pytest | project-tests |
 | Python patterns, error handling, imports | docs/llm/software-engineering-rules.md |
-| Rule create / update / self-healing | @project-rules-writing |
