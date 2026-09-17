@@ -3,9 +3,9 @@
 import sqlite3
 from pathlib import Path
 
-from controller.helpers.validar_data import validar_data
-from model.database import execute_query, execute_query_one, execute_write
-from model.filme import Filme
+from src.controller.helpers.validar_data import validar_data
+from src.model.database import execute_query, execute_query_one, execute_write
+from src.model.filme import Filme
 
 __all__ = ["FilmeController", "validar_data"]
 
@@ -76,7 +76,7 @@ class FilmeController:
     def buscar_filme(self, codigo: int | str) -> Filme | None:
         try:
             codigo_int = int(codigo)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return None
 
         row = execute_query_one(
@@ -147,7 +147,7 @@ class FilmeController:
     def remover_filme(self, codigo: int | str) -> bool:
         try:
             codigo_int = int(codigo)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return False
 
         try:

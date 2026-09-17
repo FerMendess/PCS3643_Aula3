@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from controller.sala_controller import SalaController
-from model.sala import SalaCreate, SalaResponse, SalaUpdate
+from src.controller.sala_controller import SalaController
+from src.model.sala import SalaCreate, SalaResponse, SalaUpdate
 
 router = APIRouter(prefix="/salas", tags=["Salas"])
 

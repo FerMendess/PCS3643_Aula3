@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from controller.sessao_controller import SessaoController
-from model.sessao import (
+from src.controller.sessao_controller import SessaoController
+from src.model.sessao import (
     CompraIngressoRequest,
     CompraIngressoResponse,
     Sessao,

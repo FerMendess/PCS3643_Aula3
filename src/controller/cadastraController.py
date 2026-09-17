@@ -3,13 +3,13 @@
 
 from pathlib import Path
 
-from controller.filme_controller import FilmeController
-from controller.sala_controller import SalaController
-from controller.sessao_controller import SessaoController
-from controller.tipo_ingresso_controller import TipoIngressoController
-from model.filme import Filme
-from model.sala import Sala
-from model.sessao import Sessao
+from src.controller.filme_controller import FilmeController
+from src.controller.sala_controller import SalaController
+from src.controller.sessao_controller import SessaoController
+from src.controller.tipo_ingresso_controller import TipoIngressoController
+from src.model.filme import Filme
+from src.model.sala import Sala
+from src.model.sessao import Sessao
 
 __all__ = ["CadastraController"]
 

@@ -3,8 +3,8 @@
 import sqlite3
 from pathlib import Path
 
-from model.database import execute_query, execute_query_one, execute_write
-from model.tipo_ingresso import TipoIngresso
+from src.model.database import execute_query, execute_query_one, execute_write
+from src.model.tipo_ingresso import TipoIngresso
 
 __all__ = ["TipoIngressoController"]
 

@@ -4,8 +4,8 @@ from typing import override
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from model.filme import Filme
-from model.sala import Sala
+from src.model.filme import Filme
+from src.model.sala import Sala
 
 
 class Sessao:

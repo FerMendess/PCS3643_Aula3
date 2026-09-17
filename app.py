@@ -6,11 +6,11 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from model.database import init_db
-from view.filme_view import router as filme_router
-from view.sala_view import router as sala_router
-from view.sessao_view import router as sessao_router
-from view.tipo_ingresso_view import router as tipo_ingresso_router
+from src.model.database import init_db
+from src.view.filme_view import router as filme_router
+from src.view.sala_view import router as sala_router
+from src.view.sessao_view import router as sessao_router
+from src.view.tipo_ingresso_view import router as tipo_ingresso_router
 
 
 @asynccontextmanager

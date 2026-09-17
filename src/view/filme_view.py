@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from controller.filme_controller import FilmeController
-from model.filme import FilmeCreate, FilmeResponse, FilmeUpdate
+from src.controller.filme_controller import FilmeController
+from src.model.filme import FilmeCreate, FilmeResponse, FilmeUpdate
 
 router = APIRouter(prefix="/filmes", tags=["Filmes"])
 

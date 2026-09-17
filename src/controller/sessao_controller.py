@@ -5,17 +5,17 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, override
 
-from controller.filme_controller import FilmeController
-from controller.helpers.validar_data import validar_data
-from controller.sala_controller import SalaController
-from controller.tipo_ingresso_controller import TipoIngressoController
-from model.database import (
+from src.controller.filme_controller import FilmeController
+from src.controller.helpers.validar_data import validar_data
+from src.controller.sala_controller import SalaController
+from src.controller.tipo_ingresso_controller import TipoIngressoController
+from src.model.database import (
     db_transaction,
     execute_query,
     execute_query_one,
     execute_write,
 )
-from model.sessao import Sessao
+from src.model.sessao import Sessao
 
 __all__ = ["SessaoController"]
 
@@ -169,7 +169,7 @@ class SessaoController:
     def buscar_sessao(self, codigo: int | str) -> Sessao | None:
         try:
             codigo_int = int(codigo)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return None
 
         row = execute_query_one(
@@ -275,7 +275,7 @@ class SessaoController:
     def remover_sessao(self, codigo: int | str) -> bool:
         try:
             codigo_int = int(codigo)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return False
 
         try:

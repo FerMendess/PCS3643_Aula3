@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from controller.tipo_ingresso_controller import TipoIngressoController
-from model.tipo_ingresso import (
+from src.controller.tipo_ingresso_controller import TipoIngressoController
+from src.model.tipo_ingresso import (
     TipoIngressoCreate,
     TipoIngressoResponse,
     TipoIngressoUpdate,

@@ -3,8 +3,8 @@
 import sqlite3
 from pathlib import Path
 
-from model.database import execute_query, execute_query_one, execute_write
-from model.sala import Sala
+from src.model.database import execute_query, execute_query_one, execute_write
+from src.model.sala import Sala
 
 __all__ = ["SalaController"]
 
@@ -57,7 +57,7 @@ class SalaController:
     def buscar_sala(self, numero: int | str) -> Sala | None:
         try:
             numero_int = int(numero)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return None
 
         row = execute_query_one(
@@ -110,7 +110,7 @@ class SalaController:
     def remover_sala(self, numero: int | str) -> bool:
         try:
             numero_int = int(numero)
-        except ValueError, TypeError:
+        except (ValueError, TypeError):
             return False
 
         try:
