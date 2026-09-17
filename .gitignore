@@ -224,4 +224,4 @@ __marimo__/
 # SQLite databases
 *.db
 *.sqlite
-*.sqlite3
+*.sqlite3

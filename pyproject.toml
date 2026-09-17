@@ -31,8 +31,9 @@ ignore = ["D101", "D102", "D103", "D107", "TRY003", "SIM108"]
 unfixable = ["B"]
 
 [tool.ruff.lint.per-file-ignores]
-"app/presentation/" = ["PLR0913", "PLR2004"]
-"tests/" = ["S101", "SIM117", "PLC0415", "N803", "PLR2004", "TRY300", "PLR0913", "TID251"]
+"src/view/*" = ["PLR0913", "PLR2004", "B008"]
+"tests/*" = ["S101", "SIM117", "PLC0415", "N803", "PLR2004", "TRY300", "PLR0913", "TID251"]
+"cinema.py" = ["N802"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
@@ -41,9 +42,21 @@ max-complexity = 10
 classmethod-decorators = ["classmethod", "pydantic.field_validator"]
 extend-ignore-names = ["main", "_"]
 
+
+# Tests
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "src"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
 [tool.coverage.run]
 branch = true
-source = ["app"]
+source = ["src", "app.py", "cinema.py"]
+omit = ["tests/*", "app.py"]
+
 [tool.coverage.report]
 fail_under = 80
 show_missing = true
@@ -62,12 +75,14 @@ max-doc-length = 100
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
+
 # MyPy: Type checking
 [tool.mypy]
 python_version = "3.14"
 strict = true
 explicit_package_bases = true
-files = ["app", "tests"]
+mypy_path = "src"
+files = ["src", "app.py", "cinema.py"]
 enable_error_code = ["explicit-override"]
 plugins = ["pydantic.mypy"]
 
@@ -76,31 +91,4 @@ module = ["tests.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = false
-
-# Import Linter: Checa violação DDD
-[tool.importlinter]
-root_package = "app"
-
-[[tool.importlinter.contracts]]
-name = "Domain layer independence"
-type = "forbidden"
-source_modules = ["app.domain"]
-forbidden_modules = ["app.application", "app.infrastructure", "app.presentation"]
-
-[[tool.importlinter.contracts]]
-name = "Application layer boundaries"
-type = "forbidden"
-source_modules = ["app.application"]
-forbidden_modules = ["app.infrastructure", "app.presentation"]
-
-[[tool.importlinter.contracts]]
-name = "Infrastructure layer boundaries"
-type = "forbidden"
-source_modules = ["app.infrastructure"]
-forbidden_modules = ["app.presentation"]
-
-[[tool.importlinter.contracts]]
-name = "Presentation layer boundaries"
-type = "forbidden"
-source_modules = ["app.presentation"]
-forbidden_modules = ["app.infrastructure"]
+disable_error_code = ["explicit-override", "unused-ignore"]

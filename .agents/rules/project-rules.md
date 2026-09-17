@@ -1,24 +1,20 @@
 ---
-description: Workspace facts. Use for tech stack, hexagonal layout overview, primary codebase path, virtualenv location, and deferred work (TODO.md).
-alwaysApply: true
+trigger: always_on
+description: Project facts. Use for tech stack, repository layout, virtualenv location, and deferred work (TODO.md).
 ---
-
-<!-- TEMPLATE: Inject-ready rule. Replace every FILL block with target-repo facts; delete this banner when done. -->
 
 # Project Core
 
 ## Repository & Tech Stack
+- **Project**: PCS3643 - Aula 3 (Sistema de Venda de Ingressos de Cinema MVC)
+- **Tech Stack**: Python 3.10+ (tested on Python 3.14), FastAPI, Uvicorn, SQLite, Pydantic v2, Pytest
+- **Virtualenv**: `.venv` at the repository root
+- **Entrypoints**: `app.py` (FastAPI web server & OpenAPI docs), `cinema.py` (facade)
+- **Code Directory**: `src/` (`model/`, `controller/`, `view/`)
+- **Tests Directory**: `tests/` (`test_model.py`, `test_controller.py`, `test_view.py`)
 
-- **Primary Codebase**: <!-- FILL: Root package path (e.g. app/). Discover: repo tree, pyproject.toml. Keep: one path or short phrase. -->
-- **Architecture**: <!-- FILL: One-line style (e.g. hexagonal / layered FastAPI). Discover: docs, app/ layout. Keep: short label. -->
-- **Virtualenv**: `.venv` at the repository root.
-- **Deploy**: <!-- FILL: Deploy target and entry (e.g. Lambda + pipeline/aws). Discover: pipeline/, README, Dockerfile. Keep: one line. -->
-
-
-# Deferred work (TODO.md)
-
-When you or the user defer something for later, record it in `TODO.md` at the repository root so the team can track it.
-
-- Add a bullet with a short description and enough context to resume work (file, area, or reason deferred).
+## Deferred work (TODO.md)
+When you or the user defer something for later, record it in `TODO.md` at the repository root:
+- Add a bullet with a short description and context (file, area, or reason deferred).
 - Update `TODO.md` in the same turn you agree to defer.
 - If `TODO.md` does not exist yet, create it with a short heading and the first item.

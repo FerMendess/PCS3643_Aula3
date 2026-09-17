@@ -1,23 +1,21 @@
 ---
 trigger: model_decision
-description: Use when editing app/ Python - package layout, hexagonal layers, composition root, and where adapters vs domain/application code belong.
-globs: app/**/*.py
+description: Use when editing Python files - MVC layout, layer boundaries, and persistence rules.
+globs: src/**/*.py, app.py, cinema.py
 ---
 
-<!-- TEMPLATE: Inject-ready rule. Replace every FILL block with target-repo facts; delete this banner when done. -->
+# Architecture (MVC)
 
-# Architecture
-
-| Layer | Path | Key modules |
+| Layer | Path | Responsibilities & Key Modules |
 | --- | --- | --- |
-<!-- FILL: Presentation row. Discover: app/presentation/. Keep: path + comma-separated key modules. -->
-<!-- FILL: Application row. Discover: app/application/. Keep: path + key use_cases, ports, dtos. -->
-<!-- FILL: Domain row. Discover: app/domain/. Keep: path + repositories, services, models. -->
-<!-- FILL: Infrastructure row. Discover: app/infrastructure/. Keep: path + adapter classes. -->
-<!-- FILL: Common row (or omit row). Discover: app/common/. Keep: path + shared modules. -->
+| **Entrypoint** | `app.py` | FastAPI application instance, lifespan (`init_db()`), router registration (`include_router`), root status endpoint. |
+| **Facade** | `cinema.py` | High-level orchestration facade coordinating controllers (`FilmeController`, `SalaController`, `SessaoController`, `TipoIngressoController`). |
+| **View** | `src/view/` | FastAPI REST routers (`filme_view.py`, `sala_view.py`, `sessao_view.py`, `tipo_ingresso_view.py`). Handles HTTP status codes, validation error responses, and endpoints. |
+| **Controller** | `src/controller/` | Business rules and validation (`filme_controller.py`, `sala_controller.py`, `sessao_controller.py`, `tipo_ingresso_controller.py`, `cadastraController.py`, `buscaController.py`, `helpers/validar_data.py`). Handles seat reservation atomic checks, scheduling overlap prevention. |
+| **Model** | `src/model/` | Domain entities and SQLite persistence: `database.py` (connection management, table creation, query execution), `filme.py`, `sala.py`, `sessao.py`, `tipo_ingresso.py` (Pydantic schemas & entity classes). |
 
-**Composition root**: <!-- FILL: Bootstrap file and wired types (adapters, use cases, routers). Discover: http_bootstrap.py or wire_app. Keep: one sentence. -->
-
-<!-- FILL: Primary I/O invariant (e.g. all persistence via one external API). Discover: infrastructure adapters. Keep: one bold sentence; omit if not applicable. -->
-
-Deeper package map: `docs/llm/architecture-guide.md`.
+## Invariants & Layer Boundaries
+- **Dependency Direction**: View -> Controller -> Model -> Database.
+- **View isolation**: Controllers and Models MUST NEVER import Views or FastAPI routing constructs.
+- **Model isolation**: Models encapsulate schema definitions and database mapping; they MUST NEVER import Controllers or Views.
+- **Persistence**: Relational SQLite database stored in `cinema.db`, managed via `src/model/database.py`.
