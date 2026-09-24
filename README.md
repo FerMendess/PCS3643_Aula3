@@ -1,4 +1,4 @@
-[![CI](https://github.com/FerMendess/PCS3643_Aula3/actions/workflows/<nome-do-arquivo>.yml/badge.svg)](https://github.com/FerMendess/PCS3643_Aula3/actions/workflows/<nome-do-arquivo>.yml)
+![Test status](https://github.com/FerMendess/PCS3643_Aula3/actions/workflows/tests.yml/badge.svg)
 
 
 # PCS3643 - Aula 3: Sistema de Venda de Ingressos de Cinema (MVC)
