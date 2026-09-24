@@ -25,7 +25,7 @@ def _load_config() -> dict[str, str | Path]:
                     if not configured_path.is_absolute():
                         configured_path = _CONFIG_FILE.parent / configured_path
                     return {"path": configured_path}
-        except (tomllib.TOMLDecodeError, OSError):
+        except tomllib.TOMLDecodeError, OSError:
             return {"path": fallback_path}
     return {"path": fallback_path}
 
