@@ -24,10 +24,10 @@ Funcionalidades contempladas (as mesmas da aula anterior):
 
 ---
 
-## Requisitos:
+## Como Rodar:
 
 ### 1. Compatibilidade de Versões
-- **Python**: versão **3.14** ou superior.
+- **Python**: versão **3.14** (preferencial) ou superior.
 
 ### 2. Clonar Repositório
 ```bash
@@ -57,6 +57,23 @@ uvicorn app:app --reload --port 8000
 
 O servidor poderá ser acessado em: `http://127.0.0.1:8000`.
 
+### 6. Execução da Interface
+Crie um novo terminal separado, ative novamente o ambiente virtual e rode:
+
+```bash
+cd frontend
+```
+
+```bash
+npm install vite
+```
+
+E finalmente:
+
+```bash
+npm run dev
+```
+
 ---
 
 ## Documentação
@@ -79,3 +96,15 @@ python -m pytest
 ```bash
 python -m pytest --cov=EX3
 ```
+
+---
+
+## Quality Gate
+Para linting, formatting e type checking, usamos:
+
+```bash
+ruff check --fix;
+ruff format;
+zuban check;
+```
+
