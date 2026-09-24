@@ -38,7 +38,7 @@ export default function FilmesView({ filmes, loading, onRefresh }) {
             Cadastre novos filmes através da API REST (<code>POST /filmes/</code>) ou via documentação interativa em <code>/docs</code>.
           </p>
           <button className="btn btn-primary" onClick={onRefresh}>
-            🔄 Tentar novamente
+            Tentar novamente
           </button>
         </div>
       ) : (

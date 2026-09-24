@@ -28,7 +28,7 @@ class TestSalaModel(unittest.TestCase):
             SalaCreate(numero=1, capacidade=0, tipo="2D")
 
         with self.assertRaises(ValidationError):
-            SalaCreate(numero=1, capacidade=50, tipo="4D")  # type: ignore[arg-type]
+            SalaCreate(numero=1, capacidade=50, tipo="4D")
 
         update = SalaUpdate(capacidade=60)
         self.assertEqual(update.capacidade, 60)

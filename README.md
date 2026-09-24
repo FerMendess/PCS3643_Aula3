@@ -12,15 +12,15 @@
 ---
 
 ## Descrição:
-O sistema implementa o backend de gerenciamento de cinema em arquitetura **MVC (Model-View-Controller)** com persistência em banco de dados relacional **SQLite** e API REST construída com **FastAPI**.
+O sistema implementa o backend de gerenciamento de cinema em arquitetura MVC com persistência em banco de dados relacional **SQLite** e API REST com **FastAPI**.
 
-Funcionalidades contempladas (as mesmas da aula anterior):
-- Cadastro e consulta de **Filmes** (com controle de período de exibição e duração).
-- Cadastro de **Salas** (número, capacidade e tipo 2D/3D).
-- Cadastro de **Tipos de Ingresso** e valores base.
-- Cadastro e agendamento de **Sessões** (com validação de choque de horários e integridade de assentos).
-- **Listagem de filmes/sessões** disponíveis por data.
-- **Compra de Ingressos** (inteira e meia-entrada) com persistência e garantia de atomicidade de assentos.
+Funcionalidades contempladas **(as mesmas da aula anterior)**:
+- Cadastro e consulta de **Filmes**, com controle de período de exibição e duração.
+- Cadastro de **Salas**, comn número, capacidade e tipo 2D/3D.
+- Cadastro de **Tipos de Ingresso**, com valores base.
+- Cadastro e agendamento de **Sessões**, com validação de choque de horários e integridade de assentos.
+- **Listagem de filmes/sessões**, com disponíveis por data.
+- **Compra de Ingressos**, inteira e meia-entrada, com persistência e atomicidade de assentos.
 
 ---
 

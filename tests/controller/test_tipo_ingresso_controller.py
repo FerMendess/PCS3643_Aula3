@@ -31,15 +31,15 @@ class TestCadastrarValorIngresso(unittest.TestCase):
         self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("4D", 50))
         self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("IMAX", 60))
         self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("", 30))
-        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso(None, 30))  # type: ignore[arg-type]
+        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso(None, 30))
 
     def test_cadastrar_valor_ingresso_valor_menor_ou_igual_a_zero(self):
         self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", 0))
         self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", -20))
 
     def test_cadastrar_valor_ingresso_valor_nao_inteiro(self):
-        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", 35.5))  # type: ignore[arg-type]
-        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", "30"))  # type: ignore[arg-type]
+        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", 35.5))
+        self.assertFalse(self.tipo_ingresso_ctrl.cadastrar_tipo_ingresso("2D", "30"))
 
 
 class TestTipoIngressoControllerCRUD(unittest.TestCase):

@@ -96,7 +96,7 @@ class Sessao:
     def tem_assentos_disponiveis(self) -> bool:
         return any(status == 0 for status in self.assentos.values())
 
-    __hash__ = None  # type: ignore[assignment]
+    __hash__ = None
 
     @override
     def __eq__(self, other: object) -> bool:

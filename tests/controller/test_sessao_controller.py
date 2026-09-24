@@ -68,14 +68,15 @@ class TestCadastrarSessao(unittest.TestCase):
     def test_cadastrar_sessao_hora_invalida(self):
         self.assertIsNone(self.sessao_ctrl.cadastrar_sessao(1, 1, "15/06/2026", -1))
         self.assertIsNone(self.sessao_ctrl.cadastrar_sessao(1, 1, "15/06/2026", 24))
-        self.assertIsNone(self.sessao_ctrl.cadastrar_sessao(1, 1, "15/06/2026", "20"))  # type: ignore[arg-type]
+        self.assertIsNone(self.sessao_ctrl.cadastrar_sessao(1, 1, "15/06/2026", "20"))
 
     def test_cadastrar_sessao_assentos_quantidade(self):
         sessao = self.sessao_ctrl.cadastrar_sessao(1, 1, "15/06/2026", 20)
         self.assertIsNotNone(sessao)
+        assert sessao is not None
         sala = self.sala_ctrl.buscar_sala(1)
         assert sala is not None
-        self.assertEqual(sala.capacidade, len(sessao.assentos))  # type: ignore[union-attr]
+        self.assertEqual(sala.capacidade, len(sessao.assentos))
 
     def test_cadastrar_sessao_data_invalida(self):
         self.assertIsNone(self.sessao_ctrl.cadastrar_sessao(1, 1, "32/06/2026", 20))
@@ -139,7 +140,7 @@ class TestListarFilmesPorData(unittest.TestCase):
         )
         self.assertEqual(
             self.sessao_ctrl.listar_filmes_por_data(None), "Data invalida."
-        )  # type: ignore[arg-type]
+        )
 
 
 class TestComprarIngressos(unittest.TestCase):

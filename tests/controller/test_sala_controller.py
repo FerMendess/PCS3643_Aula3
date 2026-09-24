@@ -41,7 +41,7 @@ class TestCadastrarSala(unittest.TestCase):
     def test_cadastrar_sala_tipo_invalido(self):
         self.assertIsNone(self.sala_ctrl.cadastrar_sala(3, 50, "4D"))
         self.assertIsNone(self.sala_ctrl.cadastrar_sala(3, 50, ""))
-        self.assertIsNone(self.sala_ctrl.cadastrar_sala(3, 50, None))  # type: ignore[arg-type]
+        self.assertIsNone(self.sala_ctrl.cadastrar_sala(3, 50, None))
 
 
 class TestSalaControllerCRUD(unittest.TestCase):

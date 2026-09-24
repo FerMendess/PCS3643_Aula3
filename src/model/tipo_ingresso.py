@@ -10,7 +10,7 @@ class TipoIngresso:
         self.tipo = tipo
         self.valor = valor
 
-    __hash__ = None  # type: ignore[assignment]
+    __hash__ = None
     """Compare equality based on attributes."""
 
     @override

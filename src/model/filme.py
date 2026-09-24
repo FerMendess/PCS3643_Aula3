@@ -20,7 +20,7 @@ class Filme:
         self.data_saida = data_saida
         self.duracao = duracao
 
-    __hash__ = None  # type: ignore[assignment]
+    __hash__ = None
     """Compare equality based on attributes."""
 
     @override

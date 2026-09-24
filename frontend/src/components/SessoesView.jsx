@@ -63,7 +63,7 @@ export default function SessoesView({ sessoes = [], filmes = [], salas = [], loa
         </div>
       ) : sessoes.length === 0 ? (
         <div className="state-box">
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🕒</div>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}></div>
           <h3 className="state-title">Nenhuma sessão agendada no momento</h3>
           <p className="state-description">
             Cadastre novas sessões através do endpoint <code>POST /sessoes/</code>.

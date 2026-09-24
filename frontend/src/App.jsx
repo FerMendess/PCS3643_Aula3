@@ -67,38 +67,38 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: 'IMAX', valor: 50 }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/tipos-ingresso/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: '3D', valor: 40 }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/tipos-ingresso/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: '2D', valor: 30 }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       // 2. Cadastrar salas
       await fetch('http://127.0.0.1:8000/salas/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ numero: 1, capacidade: 80, tipo: 'IMAX' }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/salas/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ numero: 2, capacidade: 60, tipo: '3D' }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/salas/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ numero: 3, capacidade: 100, tipo: '2D' }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       // 3. Cadastrar filmes
       const f1Res = await fetch('http://127.0.0.1:8000/filmes/', {
@@ -148,7 +148,7 @@ export default function App() {
           data: '25/09/2026',
           hora_inicio: 19,
         }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/sessoes/', {
         method: 'POST',
@@ -159,7 +159,7 @@ export default function App() {
           data: '25/09/2026',
           hora_inicio: 21,
         }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await fetch('http://127.0.0.1:8000/sessoes/', {
         method: 'POST',
@@ -170,7 +170,7 @@ export default function App() {
           data: '26/09/2026',
           hora_inicio: 18,
         }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       await loadData();
     } catch (err) {
@@ -206,7 +206,7 @@ export default function App() {
             }}
           >
             <div>
-              <strong>⚠️ Falha de Conexão: </strong>
+              <strong> Falha de Conexão: </strong>
               <span>{error}</span>
             </div>
             <button className="btn btn-secondary" onClick={loadData}>
@@ -232,7 +232,7 @@ export default function App() {
             }}
           >
             <div>
-              <h4 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>💡 Banco de Dados Inicial Limpo</h4>
+              <h4 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}> Banco de Dados Inicial Limpo</h4>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                 Deseja popular dados reais de demonstração (filmes com cartazes, salas IMAX/3D/2D, tipos de ingresso e sessões) via REST API?
               </p>
@@ -242,7 +242,7 @@ export default function App() {
               onClick={handleSeedDemoData}
               disabled={seeding}
             >
-              {seeding ? 'Populando...' : '✨ Inserir Dados de Demonstração'}
+              {seeding ? 'Populando...' : 'Inserir Dados de Demonstração'}
             </button>
           </div>
         )}

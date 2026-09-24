@@ -2,23 +2,33 @@
  * Mapeamento e geração de imagens de cartazes para os filmes.
  */
 
-// Cartazes oficiais em alta definição para títulos conhecidos
+// Cartazes oficiais reais de cinema (TMDB CDN em alta definição)
 const POSTER_DATABASE = {
-  'duna': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600&auto=format&fit=crop',
-  'duna: parte 2': 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop',
-  'oppenheimer': 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=600&auto=format&fit=crop',
-  'interestelar': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop',
-  'interstellar': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop',
-  'batman': 'https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=600&auto=format&fit=crop',
-  'the batman': 'https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=600&auto=format&fit=crop',
-  'avatar': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop',
-  'matrix': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600&auto=format&fit=crop',
-  'blade runner': 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=600&auto=format&fit=crop',
-  'star wars': 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600&auto=format&fit=crop',
-  'spider-man': 'https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=600&auto=format&fit=crop',
-  'homem-aranha': 'https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=600&auto=format&fit=crop',
-  'filme a': 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600&auto=format&fit=crop',
-  'filme b': 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=crop',
+  // Filmes da base atual
+  'oppenheimer': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg',
+  'past lives': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/k3waqVXSnvCZWfJYNtdamTgTtTA.jpg',
+  'vidas passadas': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/k3waqVXSnvCZWfJYNtdamTgTtTA.jpg',
+  'anatomy of a fall': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/kQs6keheMwCxJxrzVHY5xYsRbgK.jpg',
+  'anatomia de uma queda': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/kQs6keheMwCxJxrzVHY5xYsRbgK.jpg',
+  'the zone of interest': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/hUu9zyZmDD8VZAvQ2apEH1wwvRi.jpg',
+  'zona de interesse': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/hUu9zyZmDD8VZAvQ2apEH1wwvRi.jpg',
+  'anora': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/7MrVuqzgxIkm7yGkY8fB8yU8Zg7.jpg',
+  'the brutalist': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/w2c9p24s5bU5oX6iF5K8V7yA6gO.jpg',
+  'o brutalista': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/w2c9p24s5bU5oX6iF5K8V7yA6gO.jpg',
+  'everything everywhere all at once': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/w3LxiVYPqrlexP02048TegqLFY4.jpg',
+  'tudo em todo o lugar': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/w3LxiVYPqrlexP02048TegqLFY4.jpg',
+
+  // Outros títulos populares
+  'duna': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg',
+  'dune': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg',
+  'interestelar': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+  'interstellar': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+  'the batman': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/74xTEgt7R36Fpooo50r9T25onhq.jpg',
+  'batman': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/74xTEgt7R36Fpooo50r9T25onhq.jpg',
+  'avatar': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/kyeqWdyUXW608qlYkRqosgbbJyK.jpg',
+  'matrix': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
+  'spider-man': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/5weKu49GgC2Y19p5bS2zGg1rKek.jpg',
+  'homem-aranha': 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/5weKu49GgC2Y19p5bS2zGg1rKek.jpg',
 };
 
 const DEFAULT_POSTERS = [

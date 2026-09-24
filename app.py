@@ -9,22 +9,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# pyrefly: ignore [missing-import]
 from src.model.database import init_db
-
-# pyrefly: ignore [missing-import]
 from src.view.filme_view import router as filme_router
-
-# pyrefly: ignore [missing-import]
 from src.view.root_view import router as root_router
-
-# pyrefly: ignore [missing-import]
 from src.view.sala_view import router as sala_router
-
-# pyrefly: ignore [missing-import]
 from src.view.sessao_view import router as sessao_router
-
-# pyrefly: ignore [missing-import]
 from src.view.tipo_ingresso_view import router as tipo_ingresso_router
 
 _LOGGING_CONFIG = {

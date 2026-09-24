@@ -16,7 +16,7 @@ class Sala:
         self.capacidade = capacidade
         self.tipo = tipo
 
-    __hash__ = None  # type: ignore[assignment]
+    __hash__ = None
 
     @override
     def __eq__(self, other: object) -> bool:

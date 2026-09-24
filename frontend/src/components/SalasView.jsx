@@ -36,7 +36,7 @@ export default function SalasView({ salas, loading, onRefresh }) {
             Cadastre novas salas através do endpoint <code>POST /salas/</code>.
           </p>
           <button className="btn btn-primary" onClick={onRefresh}>
-            🔄 Atualizar
+            Atualizar
           </button>
         </div>
       ) : (
@@ -51,7 +51,7 @@ export default function SalasView({ salas, loading, onRefresh }) {
               </div>
 
               <div className="room-capacity">
-                <span>💺 Capacidade Total:</span>
+                <span> Capacidade Total:</span>
                 <strong>{sala.capacidade} lugares</strong>
               </div>
 

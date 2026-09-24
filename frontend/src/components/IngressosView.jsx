@@ -36,7 +36,7 @@ export default function IngressosView({ tiposIngresso, loading, onRefresh }) {
             Cadastre novos valores através do endpoint <code>POST /tipos-ingresso/</code>.
           </p>
           <button className="btn btn-primary" onClick={onRefresh}>
-            🔄 Atualizar
+            Atualizar
           </button>
         </div>
       ) : (
@@ -59,10 +59,10 @@ export default function IngressosView({ tiposIngresso, loading, onRefresh }) {
               </div>
 
               <ul className="ticket-features">
-                <li>✅ Assento individual numerado</li>
-                <li>✅ Acesso à sala de projeção correspondente</li>
-                <li>✅ Áudio imersivo de alta fidelidade</li>
-                <li>✅ Válido para a sessão selecionada</li>
+                <li> Assento individual numerado</li>
+                <li> Acesso à sala de projeção correspondente</li>
+                <li> Áudio imersivo de alta fidelidade</li>
+                <li> Válido para a sessão selecionada</li>
               </ul>
             </div>
           ))}

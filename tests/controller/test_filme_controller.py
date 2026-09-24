@@ -87,17 +87,17 @@ class TestFilmeControllerCRUD(unittest.TestCase):
             "Interestelar", "10/10/2026", "20/10/2026", 169
         )
         self.assertIsNotNone(filme)
-        assert filme is not None
+        assert filme is not None and filme.codigo is not None
         self.assertEqual(filme.nome, "Interestelar")
 
-        buscado = self.busca_ctrl.pegar_filme(filme.codigo)  # type: ignore[arg-type]
+        buscado = self.busca_ctrl.pegar_filme(filme.codigo)
         self.assertIsNotNone(buscado)
         assert buscado is not None
         self.assertEqual(buscado.nome, "Interestelar")
 
         editado = self.filme_ctrl.editar_filme(
             filme.codigo, nome="Interestelar IMAX", duracao=175
-        )  # type: ignore[arg-type]
+        )
         self.assertIsNotNone(editado)
         assert editado is not None
         self.assertEqual(editado.nome, "Interestelar IMAX")
@@ -106,6 +106,6 @@ class TestFilmeControllerCRUD(unittest.TestCase):
         lista = self.filme_ctrl.listar_filmes()
         self.assertEqual(len(lista), 1)
 
-        removido = self.filme_ctrl.remover_filme(filme.codigo)  # type: ignore[arg-type]
+        removido = self.filme_ctrl.remover_filme(filme.codigo)
         self.assertTrue(removido)
-        self.assertIsNone(self.filme_ctrl.buscar_filme(filme.codigo))  # type: ignore[arg-type]
+        self.assertIsNone(self.filme_ctrl.buscar_filme(filme.codigo))

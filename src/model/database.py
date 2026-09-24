@@ -8,26 +8,15 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, cast
 
-_CONFIG_FILE = Path(__file__).resolve().parents[2] / "config.toml"
-
 
 def _load_config() -> dict[str, str | Path]:
-    fallback_path = Path(__file__).resolve().parent.parent / "cinema.db"
-    if _CONFIG_FILE.is_file():
-        try:
-            with _CONFIG_FILE.open("rb") as f:
-                data = tomllib.load(f)
-            database_section = data.get("database")
-            if isinstance(database_section, dict):
-                path_value = database_section.get("path")
-                if isinstance(path_value, str):
-                    configured_path = Path(path_value)
-                    if not configured_path.is_absolute():
-                        configured_path = _CONFIG_FILE.parent / configured_path
-                    return {"path": configured_path}
-        except tomllib.TOMLDecodeError, OSError:
-            return {"path": fallback_path}
-    return {"path": fallback_path}
+    config_file = Path(__file__).resolve().parents[2] / "config.toml"
+    with config_file.open("rb") as f:
+        data = tomllib.load(f)
+    configured_path = Path(data["database"]["path"])
+    if not configured_path.is_absolute():
+        configured_path = config_file.parent / configured_path
+    return {"path": configured_path}
 
 
 _CONFIG: dict[str, str | Path] = _load_config()
