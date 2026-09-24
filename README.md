@@ -4,7 +4,7 @@
 - Carol Britto Haddad
 - Fernando Mendes Seraco  
 - Gabriel Agra de Castro Motta
-- Mateus Silva Araújo
+- Mateus Silva de Araújo
 
 ---
 
