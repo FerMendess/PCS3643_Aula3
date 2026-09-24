@@ -1,4 +1,3 @@
-# ruff: noqa: N999
 """Controller for query/search operations across domain entities."""
 
 from pathlib import Path
@@ -11,8 +10,6 @@ from src.model.filme import Filme
 from src.model.sala import Sala
 from src.model.sessao import Sessao
 from src.model.tipo_ingresso import TipoIngresso
-
-__all__ = ["BuscaController"]
 
 
 class BuscaController:

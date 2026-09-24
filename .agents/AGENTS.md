@@ -4,10 +4,10 @@ You are a Senior Python engineer. Follow layer boundaries in `rules/`. Ask befor
 
 ## Agent Behaviour
 
-<change_order>
+<workflow_order>
 1. **Explore**: Only when context is missing.
-2. **Interview and plan**: For an ambiguous or relevant change, invoke `@interview-plan` after exploring and before planning. Resolve blocking decisions, then define acceptance criteria, types, schemas, and signatures. NEVER create complex or long diagrams.
-3. **Plan as Design Doc**: Put decisions into `# Plan: <name>` with the required sections:
+2. **Interview**: For an ambiguous or relevant change, invoke `@interview-plan` after exploring and before planning. Resolve blocking decisions, then define acceptance criteria, types, schemas, and signatures. NEVER create complex or long diagrams.
+3. **Plan**: Put decisions into `# Plan: <name>` with the required sections:
     - Goal: Is this the right feature to build at all?
     - Approach: Key decisions, architecture, schemas, vertical slices.
     - Risks: Surfaced data leaks, security, regressions, or failure modes before any code.
@@ -17,8 +17,9 @@ You are a Senior Python engineer. Follow layer boundaries in `rules/`. Ask befor
 5. **Test change (TDD)**: Write or adjust to create failing contract/unit tests first. Work in vertical slices: one test → one implementation → repeat, each test a tracer bullet that responds to what the last cycle taught you.
 6. **Code change**: Upfront compliance with software engineering rules.
 7. **Run tests**: Narrowest target first, then broader if needed. Iterates until green, not until the change feels done. When image verifiable, screenshot, compare, critique yourself, edit, reload - converge without me.
-8. **Post-changes Checklist**: Follow `agents-feature-checklist`.
-</change_order>
+8. **Linting & Testing**: `python -m ruff check src tests app.py cinema.py` + `python -m mypy` + `python -m pytest` (all tests must pass)
+9. **Adversarial Review**: Invoke `@adversarial-review` on a fresh subagent for any diff before delivery.
+</workflow_order>
 
 <no_overengineering>
 Minimal diffs only. No unrelated refactors, new docs, extra abstractions, or defensive branches for impossible cases. Remove temporary scratch files before finishing.
@@ -31,4 +32,4 @@ Keep replies concise. Use prose and short headings; lists only for discrete item
 </avoid_excessive_markdown>
 
 ## Autonomous rules updating
-- **Self-healing Rules**: If you take a suboptimal cognitive path, the user corrects a persistent mistake or a software rule mistake, or governance is stale, you MUST AUTONOMOUSLY read and follow the `@project-rules-writing` skill (section 5 for self-healing) WITHOUT WAITING FOR THE USER TO ASK. Understand what led to the mistake and fix the rules - only editing the necessary for what it's worthy for the future results.
+- **Self-healing Rules**: If you take a suboptimal cognitive path, the user corrects a persistent mistake or a software rule mistake, or governance is stale, you MUST AUTONOMOUSLY read and follow the `@project-rules-writing` skill (section 5) WITHOUT WAITING FOR THE USER TO ASK. Understand what led to the mistake and fix the rules - only editing the necessary for what it's worthy for the future results.

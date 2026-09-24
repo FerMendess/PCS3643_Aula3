@@ -6,8 +6,6 @@ from pathlib import Path
 from src.model.database import execute_query, execute_query_one, execute_write
 from src.model.tipo_ingresso import TipoIngresso
 
-__all__ = ["TipoIngressoController"]
-
 
 class TipoIngressoController:
     def __init__(self, db_path: str | Path | None = None) -> None:
@@ -45,7 +43,7 @@ class TipoIngressoController:
         return [TipoIngresso(tipo=row["tipo"], valor=row["valor"]) for row in rows]
 
     def buscar_tipo_ingresso(self, tipo: str) -> TipoIngresso | None:
-        if not isinstance(tipo, str):
+        if not isinstance(tipo, str) or not tipo.strip():
             return None
 
         row = execute_query_one(
@@ -76,7 +74,7 @@ class TipoIngressoController:
             return None
 
     def remover_tipo_ingresso(self, tipo: str) -> bool:
-        if not isinstance(tipo, str):
+        if not isinstance(tipo, str) or not tipo.strip():
             return False
 
         try:

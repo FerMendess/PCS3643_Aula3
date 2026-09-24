@@ -1,4 +1,3 @@
-# ruff: noqa: N999
 """Controller for creation/registration operations across domain entities."""
 
 from pathlib import Path
@@ -10,8 +9,6 @@ from src.controller.tipo_ingresso_controller import TipoIngressoController
 from src.model.filme import Filme
 from src.model.sala import Sala
 from src.model.sessao import Sessao
-
-__all__ = ["CadastraController"]
 
 
 class CadastraController:

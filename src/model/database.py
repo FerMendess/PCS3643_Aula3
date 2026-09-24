@@ -2,13 +2,32 @@
 
 import os
 import sqlite3
+import tomllib
 from collections.abc import Generator, Iterable, Sequence
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, cast
 
-_DEFAULT_DB_FILE = Path(__file__).resolve().parent.parent / "cinema.db"
-_CONFIG: dict[str, str | Path] = {"path": _DEFAULT_DB_FILE}
+_CONFIG_FILE = Path(__file__).resolve().parents[2] / "config.toml"
+
+
+def _load_config() -> dict[str, str | Path]:
+    fallback_path = Path(__file__).resolve().parent.parent / "cinema.db"
+    if _CONFIG_FILE.is_file():
+        try:
+            with _CONFIG_FILE.open("rb") as f:
+                data = tomllib.load(f)
+            database_section = data.get("database")
+            if isinstance(database_section, dict):
+                path_value = database_section.get("path")
+                if isinstance(path_value, str):
+                    return {"path": Path(path_value)}
+        except tomllib.TOMLDecodeError, OSError:
+            return {"path": fallback_path}
+    return {"path": fallback_path}
+
+
+_CONFIG: dict[str, str | Path] = _load_config()
 
 
 def set_db_path(db_path: str | Path) -> None:

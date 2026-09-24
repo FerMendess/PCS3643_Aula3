@@ -1,9 +1,10 @@
 # PCS3643 - Aula 3: Sistema de Venda de Ingressos de Cinema (MVC)
 
 ## Integrantes do Grupo
-- Gabriel Agra de Castro Motta
+- Carol Britto Haddad
 - Fernando Mendes Seraco  
-*(outros faltaram por doença)*
+- Gabriel Agra de Castro Motta
+- Mateus Silva Araújo
 
 ---
 
@@ -32,24 +33,22 @@ git clone <url-do-repositorio>
 
 ### 3. Criar um Ambiente Virtual
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
 ```
 
 ### 4. Baixar Dependências
 ```bash
-pip install -r EX3/requirements.txt
+pip install -r requirements.txt
 ```
 
 ### 5. Execução da API
 ```bash
-cd EX3
 python app.py
 ```
 
 Ou diretamente através do Uvicorn:
 ```bash
-cd EX3
 uvicorn app:app --reload --port 8000
 ```
 

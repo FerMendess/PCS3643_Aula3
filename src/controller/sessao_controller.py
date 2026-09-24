@@ -3,7 +3,7 @@
 import sqlite3
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, override
+from typing import Any
 
 from src.controller.filme_controller import FilmeController
 from src.controller.helpers.validar_data import validar_data
@@ -17,31 +17,8 @@ from src.model.database import (
 )
 from src.model.sessao import Sessao
 
-__all__ = ["SessaoController"]
-
 _HORA_MINIMA = 0
 _HORA_MAXIMA = 23
-
-
-class _SynchronizedSeatsDict(dict[int, int]):
-    def __init__(
-        self,
-        sessao_codigo: int,
-        db_path: str | Path | None = None,
-        initial: dict[int, int] | None = None,
-    ) -> None:
-        super().__init__(initial or {})
-        self._sessao_codigo = sessao_codigo
-        self._db_path = db_path
-
-    @override
-    def __setitem__(self, seat: int, val: int) -> None:
-        super().__setitem__(seat, val)
-        execute_write(
-            "UPDATE assentos SET ocupado = ? WHERE codigo_sessao = ? AND numero_assento = ?;",
-            (val, self._sessao_codigo, seat),
-            db_path=self._db_path,
-        )
 
 
 class SessaoController:
@@ -128,11 +105,8 @@ class SessaoController:
                     data=data_sessao,
                     hora_inicio=hora_inicio,
                 )
-                sessao.assentos = _SynchronizedSeatsDict(
-                    codigo_sessao,
-                    self._db_path,
-                    dict.fromkeys(range(1, sala.capacidade + 1), 0),
-                )
+                sessao.db_path = self._db_path
+                sessao.assentos = dict.fromkeys(range(1, sala.capacidade + 1), 0)
                 return sessao
         except sqlite3.Error:
             return None
@@ -146,6 +120,11 @@ class SessaoController:
         for row in rows:
             sala = self._sala_ctrl.buscar_sala(row["numero_sala"])
             filme = self._filme_ctrl.buscar_filme(row["codigo_filme"])
+            rows_assentos = execute_query(
+                "SELECT numero_assento, ocupado FROM assentos WHERE codigo_sessao = ? ORDER BY numero_assento ASC;",
+                (row["codigo"],),
+                db_path=self._db_path,
+            )
             sessao = Sessao(
                 codigo=row["codigo"],
                 sala=sala,
@@ -153,23 +132,15 @@ class SessaoController:
                 data=row["data"],
                 hora_inicio=row["hora_inicio"],
             )
-            rows_assentos = execute_query(
-                "SELECT numero_assento, ocupado FROM assentos WHERE codigo_sessao = ? ORDER BY numero_assento ASC;",
-                (row["codigo"],),
-                db_path=self._db_path,
-            )
-            sessao.assentos = _SynchronizedSeatsDict(
-                row["codigo"],
-                self._db_path,
-                {a["numero_assento"]: a["ocupado"] for a in rows_assentos},
-            )
+            sessao.db_path = self._db_path
+            sessao.assentos = {a["numero_assento"]: a["ocupado"] for a in rows_assentos}
             sessoes.append(sessao)
         return sessoes
 
     def buscar_sessao(self, codigo: int | str) -> Sessao | None:
         try:
             codigo_int = int(codigo)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return None
 
         row = execute_query_one(
@@ -182,6 +153,11 @@ class SessaoController:
 
         sala = self._sala_ctrl.buscar_sala(row["numero_sala"])
         filme = self._filme_ctrl.buscar_filme(row["codigo_filme"])
+        rows_assentos = execute_query(
+            "SELECT numero_assento, ocupado FROM assentos WHERE codigo_sessao = ? ORDER BY numero_assento ASC;",
+            (codigo_int,),
+            db_path=self._db_path,
+        )
         sessao = Sessao(
             codigo=row["codigo"],
             sala=sala,
@@ -189,16 +165,8 @@ class SessaoController:
             data=row["data"],
             hora_inicio=row["hora_inicio"],
         )
-        rows_assentos = execute_query(
-            "SELECT numero_assento, ocupado FROM assentos WHERE codigo_sessao = ? ORDER BY numero_assento ASC;",
-            (codigo_int,),
-            db_path=self._db_path,
-        )
-        sessao.assentos = _SynchronizedSeatsDict(
-            codigo_int,
-            self._db_path,
-            {a["numero_assento"]: a["ocupado"] for a in rows_assentos},
-        )
+        sessao.db_path = self._db_path
+        sessao.assentos = {a["numero_assento"]: a["ocupado"] for a in rows_assentos}
         return sessao
 
     def editar_sessao(
@@ -275,7 +243,7 @@ class SessaoController:
     def remover_sessao(self, codigo: int | str) -> bool:
         try:
             codigo_int = int(codigo)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return False
 
         try:
@@ -296,21 +264,22 @@ class SessaoController:
         sessoes = self.listar_sessoes()
         linhas: list[str] = []
         for sessao in sessoes:
-            if sessao.data == data and sessao.sala and sessao.filme:
-                tem_assentos_disponiveis = any(
-                    status == 0 for status in sessao.assentos.values()
+            if (
+                sessao.data == data
+                and sessao.sala
+                and sessao.filme
+                and sessao.tem_assentos_disponiveis()
+            ):
+                tipo_obj = self._tipo_ingresso_ctrl.buscar_tipo_ingresso(
+                    sessao.sala.tipo or ""
                 )
-                if tem_assentos_disponiveis:
-                    tipo_obj = self._tipo_ingresso_ctrl.buscar_tipo_ingresso(
-                        sessao.sala.tipo or ""
-                    )
-                    valor = tipo_obj.valor if tipo_obj else 0
-                    linha = (
-                        f"{sessao.codigo}: {sessao.filme.nome}, "
-                        f"sala {sessao.sala.numero} ({sessao.sala.tipo}), "
-                        f"{sessao.hora_inicio}h, {valor} reais."
-                    )
-                    linhas.append(linha)
+                valor = tipo_obj.valor if tipo_obj else 0
+                linha = (
+                    f"{sessao.codigo}: {sessao.filme.nome}, "
+                    f"sala {sessao.sala.numero} ({sessao.sala.tipo}), "
+                    f"{sessao.hora_inicio}h, {valor} reais."
+                )
+                linhas.append(linha)
 
         if not linhas:
             return "Nenhum filme no dia escolhido."
@@ -324,30 +293,31 @@ class SessaoController:
         sessoes = self.listar_sessoes()
         detalhes: list[dict[str, Any]] = []
         for sessao in sessoes:
-            if sessao.data == data and sessao.sala and sessao.filme:
-                tem_assentos_disponiveis = any(
-                    status == 0 for status in sessao.assentos.values()
+            if (
+                sessao.data == data
+                and sessao.sala
+                and sessao.filme
+                and sessao.tem_assentos_disponiveis()
+            ):
+                tipo_obj = self._tipo_ingresso_ctrl.buscar_tipo_ingresso(
+                    sessao.sala.tipo or ""
                 )
-                if tem_assentos_disponiveis:
-                    tipo_obj = self._tipo_ingresso_ctrl.buscar_tipo_ingresso(
-                        sessao.sala.tipo or ""
-                    )
-                    valor = tipo_obj.valor if tipo_obj else 0
-                    detalhes.append(
-                        {
-                            "codigo": sessao.codigo,
-                            "filme_nome": sessao.filme.nome,
-                            "numero_sala": sessao.sala.numero,
-                            "tipo_sala": sessao.sala.tipo,
-                            "hora_inicio": sessao.hora_inicio,
-                            "valor": valor,
-                            "descricao": (
-                                f"{sessao.codigo}: {sessao.filme.nome}, "
-                                f"sala {sessao.sala.numero} ({sessao.sala.tipo}), "
-                                f"{sessao.hora_inicio}h, {valor} reais."
-                            ),
-                        }
-                    )
+                valor = tipo_obj.valor if tipo_obj else 0
+                detalhes.append(
+                    {
+                        "codigo": sessao.codigo,
+                        "filme_nome": sessao.filme.nome,
+                        "numero_sala": sessao.sala.numero,
+                        "tipo_sala": sessao.sala.tipo,
+                        "hora_inicio": sessao.hora_inicio,
+                        "valor": valor,
+                        "descricao": (
+                            f"{sessao.codigo}: {sessao.filme.nome}, "
+                            f"sala {sessao.sala.numero} ({sessao.sala.tipo}), "
+                            f"{sessao.hora_inicio}h, {valor} reais."
+                        ),
+                    }
+                )
         return detalhes
 
     def comprar_ingressos(

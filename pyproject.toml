@@ -4,24 +4,24 @@ extend-exclude = ["docs", "scripts"]
 
 [tool.ruff.lint]
 select = [
-"B",      # flake8-bugbear
+"B",      # bugbear
 "I",      # isort
 "F",      # pyflakes
-"C901",   # mccabe complexity
+"C901",   # complexity
 "N",      # pep8-naming
 "S",      # bandit
 "PERF",   # perflint
 "G",      # logging
 "UP",     # pyupgrade
-"TRY",    # exceções
-"SIM",    # simplificações
+"TRY",    # exceptions
+"SIM",    # simplifications
 "D",      # docstrings
 "TID",    # imports
 "PL",     # pylint
 "E4",     # PEP-8-imports
 "E7",     # PEP-8-statements
 "E9",     # PEP-8-runtime
-"W505",   # doc line-length
+"W505",   # docs line-length
 "W605",   # escape
 "RUF012", # mutable
 "BLE",    # except
@@ -31,9 +31,8 @@ ignore = ["D101", "D102", "D103", "D107", "TRY003", "SIM108"]
 unfixable = ["B"]
 
 [tool.ruff.lint.per-file-ignores]
-"src/view/*" = ["PLR0913", "PLR2004", "B008"]
+"src/view/*" = ["B008"]
 "tests/*" = ["S101", "SIM117", "PLC0415", "N803", "PLR2004", "TRY300", "PLR0913", "TID251"]
-"cinema.py" = ["N802"]
 
 [tool.ruff.lint.mccabe]
 max-complexity = 10
@@ -54,13 +53,14 @@ addopts = "-v --tb=short"
 
 [tool.coverage.run]
 branch = true
-source = ["src", "app.py", "cinema.py"]
+source = ["src", "app.py", "cinema.py", "cinema_facade.py"]
 omit = ["tests/*", "app.py"]
 
 [tool.coverage.report]
 fail_under = 80
 show_missing = true
 skip_covered = true
+
 
 # PEP8
 [tool.ruff.lint.flake8-tidy-imports]
@@ -76,19 +76,13 @@ max-doc-length = 100
 convention = "google"
 
 
-# MyPy: Type checking
-[tool.mypy]
-python_version = "3.14"
+# Zuban: Type checking
+[tool.zuban]
 strict = true
-explicit_package_bases = true
-mypy_path = "."
-files = ["src", "app.py", "cinema.py"]
-enable_error_code = ["explicit-override"]
-plugins = ["pydantic.mypy"]
-
-[[tool.mypy.overrides]]
-module = ["tests.*"]
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-check_untyped_defs = false
-disable_error_code = ["explicit-override", "unused-ignore"]
+disallow_untyped_defs = true
+warn_unreachable = true
+allow_untyped_globals = false
+check_untyped_defs = true
+follow_untyped_imports = true
+exclude_gitignore = true
+exclude = ["tests"]

@@ -1,11 +1,38 @@
 """Domain model and Pydantic schemas for Sessao and Ingressos."""
 
+from collections.abc import Mapping
+from pathlib import Path
 from typing import override
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from src.model.database import execute_write
 from src.model.filme import Filme
 from src.model.sala import Sala
+
+
+class AssentosDict(dict[int, int]):
+    """Dictionary representing seats that synchronizes updates with database persistence."""
+
+    def __init__(
+        self,
+        sessao_codigo: int | None = None,
+        db_path: str | Path | None = None,
+        initial: Mapping[int, int] | None = None,
+    ) -> None:
+        super().__init__(initial or {})
+        self._sessao_codigo = sessao_codigo
+        self._db_path = db_path
+
+    @override
+    def __setitem__(self, seat: int, val: int) -> None:
+        super().__setitem__(seat, val)
+        if self._sessao_codigo is not None:
+            execute_write(
+                "UPDATE assentos SET ocupado = ? WHERE codigo_sessao = ? AND numero_assento = ?;",
+                (val, self._sessao_codigo, seat),
+                db_path=self._db_path,
+            )
 
 
 class Sessao:
@@ -17,12 +44,57 @@ class Sessao:
         hora_inicio: int | None = None,
         codigo: int | None = None,
     ) -> None:
-        self.codigo = codigo
+        self._codigo = codigo
+        self._db_path: str | Path | None = None
         self.sala = sala
         self.filme = filme
         self.data = data
         self.hora_inicio = hora_inicio
-        self.assentos: dict[int, int] = {}
+        self._assentos: AssentosDict = AssentosDict(sessao_codigo=codigo)
+
+    @property
+    def codigo(self) -> int | None:
+        return self._codigo
+
+    @codigo.setter
+    def codigo(self, value: int | None) -> None:
+        self._codigo = value
+        if hasattr(self, "_assentos") and isinstance(self._assentos, AssentosDict):
+            self._assentos._sessao_codigo = value
+
+    @property
+    def db_path(self) -> str | Path | None:
+        return self._db_path
+
+    @db_path.setter
+    def db_path(self, value: str | Path | None) -> None:
+        self._db_path = value
+        if hasattr(self, "_assentos") and isinstance(self._assentos, AssentosDict):
+            self._assentos._db_path = value
+
+    @property
+    def assentos(self) -> AssentosDict:
+        return self._assentos
+
+    @assentos.setter
+    def assentos(self, value: Mapping[int, int] | None) -> None:
+        if isinstance(value, AssentosDict):
+            self._assentos = value
+        else:
+            self._assentos = AssentosDict(
+                sessao_codigo=self._codigo,
+                db_path=self._db_path,
+                initial=value,
+            )
+
+    def ocupar_assento(self, seat: int) -> None:
+        self.assentos[seat] = 1
+
+    def liberar_assento(self, seat: int) -> None:
+        self.assentos[seat] = 0
+
+    def tem_assentos_disponiveis(self) -> bool:
+        return any(status == 0 for status in self.assentos.values())
 
     __hash__ = None  # type: ignore[assignment]
 

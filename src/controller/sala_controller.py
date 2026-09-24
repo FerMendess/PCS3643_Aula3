@@ -6,8 +6,6 @@ from pathlib import Path
 from src.model.database import execute_query, execute_query_one, execute_write
 from src.model.sala import Sala
 
-__all__ = ["SalaController"]
-
 
 class SalaController:
     def __init__(self, db_path: str | Path | None = None) -> None:
@@ -57,7 +55,7 @@ class SalaController:
     def buscar_sala(self, numero: int | str) -> Sala | None:
         try:
             numero_int = int(numero)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return None
 
         row = execute_query_one(
@@ -110,7 +108,7 @@ class SalaController:
     def remover_sala(self, numero: int | str) -> bool:
         try:
             numero_int = int(numero)
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return False
 
         try:
