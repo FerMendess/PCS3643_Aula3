@@ -17,7 +17,7 @@ You are a Senior Python engineer. Follow layer boundaries in `rules/`. Ask befor
 5. **Test change (TDD)**: Write or adjust to create failing contract/unit tests first. Work in vertical slices: one test → one implementation → repeat, each test a tracer bullet that responds to what the last cycle taught you.
 6. **Code change**: Upfront compliance with software engineering rules.
 7. **Run tests**: Narrowest target first, then broader if needed. Iterates until green, not until the change feels done. When image verifiable, screenshot, compare, critique yourself, edit, reload - converge without me.
-8. **Linting & Testing**: `python -m ruff check src tests app.py cinema.py` + `python -m mypy` + `python -m pytest` (all tests must pass)
+8. **Linting & Testing**: `ruff check --fix; ruff format; zuban check; python -m pytest`
 9. **Adversarial Review**: Invoke `@adversarial-review` on a fresh subagent for any diff before delivery.
 </workflow_order>
 
@@ -30,6 +30,3 @@ When there's a breaking change, first ask user whether to keep legacy code.
 <avoid_excessive_markdown>
 Keep replies concise. Use prose and short headings; lists only for discrete items. No bold decoration or one-line bullet chains unless the user asks.
 </avoid_excessive_markdown>
-
-## Autonomous rules updating
-- **Self-healing Rules**: If you take a suboptimal cognitive path, the user corrects a persistent mistake or a software rule mistake, or governance is stale, you MUST AUTONOMOUSLY read and follow the `@project-rules-writing` skill (section 5) WITHOUT WAITING FOR THE USER TO ASK. Understand what led to the mistake and fix the rules - only editing the necessary for what it's worthy for the future results.

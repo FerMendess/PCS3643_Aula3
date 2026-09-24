@@ -53,7 +53,7 @@ addopts = "-v --tb=short"
 
 [tool.coverage.run]
 branch = true
-source = ["src", "app.py", "cinema.py", "cinema_facade.py"]
+source = ["src", "app.py", "cinema_facade.py"]
 omit = ["tests/*", "app.py"]
 
 [tool.coverage.report]

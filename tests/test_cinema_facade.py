@@ -48,12 +48,3 @@ class TestCinemaFacade(unittest.TestCase):
 
         valor_total = cinema_facade.comprarIngressos(sessao.codigo, [1, 2], [0, 1])
         self.assertEqual(valor_total, 45)
-
-    def test_cinema_backward_compatibility_reexport(self) -> None:
-        import cinema
-
-        filme = cinema.cadastrar_filme("Interstellar", "01/01/2026", "10/01/2026", 169)
-        self.assertIsNotNone(filme)
-        assert filme is not None and filme.codigo is not None
-        buscado = cinema.pegar_filme(filme.codigo)
-        self.assertIsNotNone(buscado)
