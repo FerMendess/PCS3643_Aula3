@@ -7,12 +7,19 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+# pyrefly: ignore [missing-import]
 from src.model.database import init_db
+# pyrefly: ignore [missing-import]
 from src.view.filme_view import router as filme_router
+# pyrefly: ignore [missing-import]
 from src.view.root_view import router as root_router
+# pyrefly: ignore [missing-import]
 from src.view.sala_view import router as sala_router
+# pyrefly: ignore [missing-import]
 from src.view.sessao_view import router as sessao_router
+# pyrefly: ignore [missing-import]
 from src.view.tipo_ingresso_view import router as tipo_ingresso_router
 
 _LOGGING_CONFIG = {
@@ -60,6 +67,14 @@ app = FastAPI(
         "salas, sessões e tipos de ingresso com persistência em SQLite."
     ),
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(root_router)
